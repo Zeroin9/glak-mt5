@@ -3,71 +3,71 @@ body {
     padding: 0;
     font-family: "Roboto", sans-serif;
     background-color: #FFFFFF;
-  }
+}
 
-  .header {
+.header {
     background-color: #FFFFFF;
     color: #022D9A;
     padding: 5px;
     display: flex;
     align-items: center;
     height: 60px;
-  }
+}
 
-  .logo {
+.logo {
     width: 146px;
     height: 50px;
     background-image: url(https://cdn.discordapp.com/attachments/1162320888901935128/1162587183551615058/image.png);
     background-size: cover;
     margin-right: 10px;
-  }
+}
 
-  .logo-text {
+.logo-text {
     font-size: 49px;
-  }
+}
 
-  .container {
+.container {
     display: flex;
     height: 100vh;
     flex-direction: column;
-  }
+}
 
-  .content {
+.content {
     flex: 1;
     display: flex;
     height: calc(100vh - 70px);
-  }
+}
 
-  .sidebar {
+.sidebar {
     width: 15%;
     background-color: #FFFFFF;
     color: #21242C;
     display: flex;
     flex-direction: column;
-  }
+}
 
-  .filters {
+.filters {
     padding: 20px;
     background-color: #EBF3FE;
     flex: 1;
-  }
+}
 
-  .filter-item {
+.filter-item {
     margin-bottom: 10px;
-  }
+}
 
-  .filter-item label {
+.filter-item label {
     font-size: 18px;
     display: block;
     margin-bottom: 5px;
-  }
+}
 
-  .filter-item input[type="checkbox"],
-  .filter-item input[type="text"] {
+.filter-item input[type="checkbox"],
+.filter-item input[type="text"] {
     margin-left: 5px;
-  }
+}
 
-  .confirm-button {
+.confirm-button {
     margin-top: 20px;
     background-color: #3A83F1;
     color: #FFFFFF;
@@ -75,37 +75,85 @@ body {
     padding: 10px 20px;
     font-size: 18px;
     cursor: pointer;
-  }
+}
 
-  .object-list {
+.object-list {
     width: 15%;
     background-color: #EBF3FE;
     padding: 20px;
     overflow-y: auto;
-  }
+}
 
-  .object-card {
+.object-card {
     margin-bottom: 20px;
     padding: 10px;
     background-color: #D8E6FC;
     border-radius: 5px;
-  }
+}
 
-  .object-card h3 {
+.object-card h3 {
     font-size: 22px;
     color: #21242C;
     margin: 0;
     margin-bottom: 5px;
-  }
+}
 
-  .object-card p {
+.object-card p {
     font-size: 18px;
     margin: 0;
     color: #787E8D;
-  }
+}
 
-  .map {
+.map {
     flex: 1;
     background-color: #D8E6FC;
     width: 70%;
-  }
+}
+
+.business-attendance-view__plot-container {
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+.business-tab-wrapper__content {
+    --business-tab-min-height-card-header-height: 48px;
+    --business-tab-min-height-sidebar-search-margin: 64px;
+}
+
+.business-attendance-view__bars {
+    display: flex;
+    box-sizing: border-box;
+    height: 56px;
+    margin: 0 8px 16px;
+    position: relative;
+}
+
+.business-attendance-view__bar {
+    background-color: rgba(25,109,255,.3);
+    border-top-left-radius: 1px;
+    border-top-right-radius: 1px;
+    margin-right: 1px;
+    flex-shrink: 0;
+    flex-grow: 1;
+    position: relative;
+    align-self: flex-end;
+    cursor: pointer;
+    transition: background-color .1s ease-out,height .1s ease-out;
+}
+
+.business-attendance-view__bar:first-child:before, .business-attendance-view__bar:last-child:before, .business-attendance-view__bar:nth-child(2n+1):before {
+    content: attr(data-time);
+    width: 32px;
+    height: 14px;
+    font-size: 12px;
+    line-height: 14px;
+    line-height: 1;
+    color: var(--color-text-secondary);
+    position: absolute;
+    bottom: -16px;
+    left: -16.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}

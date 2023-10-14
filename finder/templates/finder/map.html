@@ -5,7 +5,7 @@
         <title>Map Page</title>
         <link rel="stylesheet" href="{% static 'mystyle.css' %}" />
         <script src="https://unpkg.com/maplibre-gl/dist/maplibre-gl.js"></script>
-        <link href="https://unpkg.com/maplibre-gl/dist/maplibre-gl.css" rel="stylesheet"/>
+        <link href="https://unpkg.com/maplibre-gl/dist/maplibre-gl.css" rel="stylesheet" />
     </head>
     <body>
         <div class="container">
@@ -61,23 +61,43 @@
                             container: "map",
                             style: "https://api.maptiler.com/maps/streets/style.json?key=RZkQYq6iEQDVqhOPitbq",
                             center: [longitude, latitude],
-                            zoom: 14,
+                            zoom: 10,
                         });
+                        
+                        {% for office in offices %}
+                            initMarker({{office.longitude|stringformat:".6f"}}, {{office.latitude|stringformat:".6f"}}).addTo(map);
+                        {% endfor %}
+                    }
 
-                        var marker = new maplibregl.Marker().setLngLat([longitude, latitude]).setPopup(new maplibregl.Popup().setHTML('<a class="confirm-button-small" href="https://yandex.ru/maps/?mode=routes&rtext=~52.218911%2C104.279079">Открыть в Яндекс.Картах</a>')).addTo(map);
+                    function initMarker(longitude, latitude) {
+                        return new maplibregl.Marker()
+                            .setLngLat([longitude, latitude])
                     }
                 </script>
                 <div class="object-list">
-                    <div class="object-card">
-                        <h3>Объект 1</h3>
-                        <p>Свойство1: Значение</p>
-                        <p>Свойство2: Значение</p>
-                    </div>
-                    <div class="object-card">
-                        <h3>Объект 2</h3>
-                        <p>Свойство1: Значение</p>
-                        <p>Свойство2: Значение</p>
-                    </div>
+                    {% for office in offices %}
+                        <div class="object-card">
+                            <h3>{{office.salePointName}}</h3>
+                            <p>Адрес: {{office.address}}</p>
+                            <div class="business-attendance-view__plot-container">
+                                <div class="business-attendance-view__bars">
+                                    <div class="business-attendance-view__bar" data-time="09:00" style="height: 63%;"></div>
+                                    <div class="business-attendance-view__bar" data-time="10:00" style="height: 84%;"></div>
+                                    <div class="business-attendance-view__bar" data-time="11:00" style="height: 91%;"></div>
+                                    <div class="business-attendance-view__bar" data-time="12:00" style="height: 96%;"></div>
+                                    <div class="business-attendance-view__bar _active" data-time="13:00" style="height: 100%;"></div>
+                                    <div class="business-attendance-view__bar" data-time="14:00" style="height: 96%;"></div>
+                                    <div class="business-attendance-view__bar" data-time="15:00" style="height: 92%;"></div>
+                                    <div class="business-attendance-view__bar" data-time="16:00" style="height: 87%;"></div>
+                                    <div class="business-attendance-view__bar" data-time="17:00" style="height: 79%;"></div>
+                                    <div class="business-attendance-view__bar" data-time="18:00" style="height: 66%;"></div>
+                                    <div class="business-attendance-view__bar" data-time="19:00" style="height: 40%;"></div>
+                                    <div class="business-attendance-view__bar" data-time="20:00" style="height: 36%;"></div>
+                                    <div class="business-attendance-view__bar" data-time="21:00" style="height: 32%;"></div>
+                                </div>
+                              </div>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
