@@ -25,8 +25,10 @@
                                 <label for="loadless">Свободное</label>
                                 <input type="radio" id="loadless" name="filter_type" value="loadless" />
                             </div>
+                            <input type="hidden" id="user_lon" name="user_lon" />
+                            <input type="hidden" id="user_lat" name="user_lat" />
                         </form>
-                        <button class="confirm-button" type="submit" form="data">Подтвердить</button>
+                        <button class="confirm-button" type="submit" form="data">Найти</button>
                     </div>
                 </div>
                 <div id="map" class="map"></div>
@@ -43,6 +45,9 @@
                     function success(pos) {
                         var crd = pos.coords;
 
+                        document.getElementById('user_lon').value = crd.longitude;
+                        document.getElementById('user_lat').value = crd.latitude;
+
                         initMap(crd.longitude, crd.latitude);
 
                         console.log("Ваше текущее местоположение:");
@@ -54,6 +59,9 @@
                     function error(err) {
                         console.warn(`ERROR(${err.code}): ${err.message}`);
 
+                        document.getElementById('user_lon').value = 37.604744;
+                        document.getElementById('user_lat').value = 55.752587;
+
                         initMap(37.604744, 55.752587);
                     }
 
@@ -62,19 +70,27 @@
                             container: "map",
                             style: "https://api.maptiler.com/maps/streets/style.json?key=RZkQYq6iEQDVqhOPitbq",
                             center: [longitude, latitude],
+                            {% if is_search %}
+                            zoom: 14,
+                            {% else %}
                             zoom: 10,
+                            {% endif %}
                         });
 
                         {% for office_load in offices_loads_list %}
                             initMarker({{office_load.office.longitude|stringformat:".6f"}}, {{office_load.office.latitude|stringformat:".6f"}}, "object{{office_load.num}}");
                         {% endfor %}
+
+                        {% if is_search %}
+                            selectObjectCard("object0");
+                        {% endif %}
                     }
 
                     function initMarker(longitude, latitude, objectCardId) {
                         marker = new maplibregl.Marker()
                             .setLngLat([longitude, latitude])
                             .setPopup(new maplibregl.Popup()
-                                .setHTML('<a class="confirm-button-small" href="https://yandex.ru/maps/?mode=routes&rtext=~' + latitude + '%2' + longitude + '">Как добраться</a>')
+                                .setHTML('<a class="confirm-button-small" href="https://yandex.ru/maps/?mode=routes&rtext=~' + latitude + '%2C' + longitude + '">Как добраться</a>')
                             );
                         marker.getElement().addEventListener('click', function () {selectObjectCard(objectCardId)});
                         marker.addTo(map);
@@ -96,7 +112,7 @@
 
                         objectCard.classList.add('highlight');
 
-                        objectList.scrollTop = objectCard.offsetTop;
+                        objectList.scrollTop = objectCard.offsetTop - 70;
                     }
                 </script>
                 <div id="objectList" class="object-list">
@@ -104,7 +120,6 @@
                         <div id="object{{office_load.num}}" class="object-card" onclick="setCenter({{office_load.office.longitude|stringformat:".6f"}}, {{office_load.office.latitude|stringformat:".6f"}})">
                             <h3>{{office_load.office.salePointName}}</h3>
                             <p>Адрес: {{office_load.office.address}}</p>
-                            <p>Данные: {{office_load.noData}}</p>
                             <div class="business-attendance-view__plot-container">
                                 <div class="business-attendance-view__bars">
                                     {% for load in office_load.load_list %}

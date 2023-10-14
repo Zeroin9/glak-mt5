@@ -1,15 +1,15 @@
 from django.shortcuts import render
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from .models import ATM, Office, OfficeLoad
-import json
+# from django.http import JsonResponse
+# from django.views.decorators.csrf import csrf_exempt
+#from .models import Office
+from .models import OfficeLoad
+# import json
 import datetime
-
-def atms_list(request):
-    return render(request, 'finder/map.html', {'atms': ATM.objects.all()})
+from . import sorter, dayhour
 
 def office_list(request):
     offices_loads = {}
+    is_search = False
     loads = OfficeLoad.objects.filter(date=datetime.date.today())
 
     offices = []
@@ -23,6 +23,18 @@ def office_list(request):
             offices_loads[office] = load_list
         load_list.append(load)
 
+    if request.method == 'GET':
+        filter_type = request.GET.get('filter_type', False)
+        if not filter_type:
+            pass
+        else:
+            is_search = True
+            if filter_type == 'nearby':
+                user_lon = request.GET.get('user_lon')
+                user_lat = request.GET.get('user_lat')
+                offices = sorter.sort_by_distance(offices, float(user_lon), float(user_lat))
+            if filter_type == 'loadless':
+                offices = sorter.sort_by_load(offices_loads, dayhour.get_current_day(), dayhour.get_current_hour())
 
     k=0
     offices_loads_list = []
@@ -31,11 +43,11 @@ def office_list(request):
         no_data = True
         if not load_list or len(load_list) < 1:
             no_data = False
-        office_load = {'num': k, 'office': office, 'load_list': load_list, 'noData': no_data}
+        office_load = {'num': k, 'office': office, 'load_list': load_list}
         offices_loads_list.append(office_load)
         k += 1
 
-    return render(request, 'finder/map.html', {'offices_loads_list': offices_loads_list})
+    return render(request, 'finder/map.html', {'offices_loads_list': offices_loads_list, 'is_search': is_search})
 
 # @csrf_exempt
 # def office_add(request):
