@@ -27,3 +27,8 @@ class Office(models.Model):
     def __str__(self):
         return self.salePointName
 
+class OfficeLoad(models.Model):
+    office = models.ForeignKey(Office, on_delete=models.CASCADE)
+    day = models.CharField(max_length=2)
+    hour = models.CharField(max_length=5)
+    percentage = models.IntegerField()
