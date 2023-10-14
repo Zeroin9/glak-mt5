@@ -21,8 +21,8 @@ class Office(models.Model):
     hasRamp = models.BooleanField()
     latitude = models.FloatField()
     longitude = models.FloatField()
-    kep = models.FloatField()
-    myBranch = models.FloatField()
+    kep = models.BooleanField()
+    myBranch = models.BooleanField()
 
     def __str__(self):
         return self.salePointName
