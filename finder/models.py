@@ -29,6 +29,7 @@ class Office(models.Model):
 
 class OfficeLoad(models.Model):
     office = models.ForeignKey(Office, on_delete=models.CASCADE)
+    date = models.DateField()
     day = models.CharField(max_length=2)
     hour = models.CharField(max_length=5)
     percentage = models.IntegerField()
