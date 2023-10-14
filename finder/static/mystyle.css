@@ -1,0 +1,111 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Roboto", sans-serif;
+    background-color: #FFFFFF;
+  }
+
+  .header {
+    background-color: #FFFFFF;
+    color: #022D9A;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    height: 60px;
+  }
+
+  .logo {
+    width: 146px;
+    height: 50px;
+    background-image: url(https://cdn.discordapp.com/attachments/1162320888901935128/1162587183551615058/image.png);
+    background-size: cover;
+    margin-right: 10px;
+  }
+
+  .logo-text {
+    font-size: 49px;
+  }
+
+  .container {
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+  }
+
+  .content {
+    flex: 1;
+    display: flex;
+    height: calc(100vh - 70px);
+  }
+
+  .sidebar {
+    width: 15%;
+    background-color: #FFFFFF;
+    color: #21242C;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .filters {
+    padding: 20px;
+    background-color: #EBF3FE;
+    flex: 1;
+  }
+
+  .filter-item {
+    margin-bottom: 10px;
+  }
+
+  .filter-item label {
+    font-size: 18px;
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .filter-item input[type="checkbox"],
+  .filter-item input[type="text"] {
+    margin-left: 5px;
+  }
+
+  .confirm-button {
+    margin-top: 20px;
+    background-color: #3A83F1;
+    color: #FFFFFF;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+  }
+
+  .object-list {
+    width: 15%;
+    background-color: #EBF3FE;
+    padding: 20px;
+    overflow-y: auto;
+  }
+
+  .object-card {
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #D8E6FC;
+    border-radius: 5px;
+  }
+
+  .object-card h3 {
+    font-size: 22px;
+    color: #21242C;
+    margin: 0;
+    margin-bottom: 5px;
+  }
+
+  .object-card p {
+    font-size: 18px;
+    margin: 0;
+    color: #787E8D;
+  }
+
+  .map {
+    flex: 1;
+    background-color: #D8E6FC;
+    width: 70%;
+  }

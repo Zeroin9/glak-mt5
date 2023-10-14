@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Map Page</title>
+        <link rel="stylesheet" href="{% static 'mystyle.css' %}" />
+        <script src="https://unpkg.com/maplibre-gl/dist/maplibre-gl.js"></script>
+        <link href="https://unpkg.com/maplibre-gl/dist/maplibre-gl.css" rel="stylesheet"/>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <div class="logo"></div>
+                <h1 class="logo-text">MyBank</h1>
+            </div>
+            <div class="content">
+                <div class="sidebar">
+                    <div class="filters">
+                        <form id="data" method="get">
+                            <div class="filter-item">
+                                <label for="property1">Есть свойство1</label>
+                                <input type="checkbox" id="property1" name="property1" />
+                            </div>
+                            <div class="filter-item">
+                                <label for="name">Наименование</label>
+                                <input type="text" id="name" name="name" />
+                            </div>
+                        </form>
+                        <button class="confirm-button" type="submit" form="data">Подтвердить</button>
+                    </div>
+                </div>
+                <div id="map" class="map"></div>
+                <script>
+                    navigator.geolocation.getCurrentPosition(success, error, options);
+
+                    var options = {
+                        enableHighAccuracy: true,
+                        timeout: 5000,
+                        maximumAge: 0,
+                    };
+
+                    function success(pos) {
+                        var crd = pos.coords;
+
+                        initMap(crd.longitude, crd.latitude);
+
+                        console.log("Ваше текущее местоположение:");
+                        console.log(`Широта: ${crd.latitude}`);
+                        console.log(`Долгота: ${crd.longitude}`);
+                        console.log(`Плюс-минус ${crd.accuracy} метров.`);
+                    }
+
+                    function error(err) {
+                        console.warn(`ERROR(${err.code}): ${err.message}`);
+
+                        initMap(37.604744, 55.752587);
+                    }
+
+                    function initMap(longitude, latitude) {
+                        var map = new maplibregl.Map({
+                            container: "map",
+                            style: "https://api.maptiler.com/maps/streets/style.json?key=RZkQYq6iEQDVqhOPitbq",
+                            center: [longitude, latitude],
+                            zoom: 14,
+                        });
+
+                        var marker = new maplibregl.Marker().setLngLat([longitude, latitude]).setPopup(new maplibregl.Popup().setHTML('<a class="confirm-button-small" href="https://yandex.ru/maps/?mode=routes&rtext=~52.218911%2C104.279079">Открыть в Яндекс.Картах</a>')).addTo(map);
+                    }
+                </script>
+                <div class="object-list">
+                    <div class="object-card">
+                        <h3>Объект 1</h3>
+                        <p>Свойство1: Значение</p>
+                        <p>Свойство2: Значение</p>
+                    </div>
+                    <div class="object-card">
+                        <h3>Объект 2</h3>
+                        <p>Свойство1: Значение</p>
+                        <p>Свойство2: Значение</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
