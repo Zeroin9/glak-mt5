@@ -131,3 +131,5 @@ MEDIA_ROOT = '/home/GLAK/mybank/media'
 MEDIA_URL = '/media/'
 STATIC_ROOT = '/home/GLAK/mybank/static'
 STATIC_URL = '/static/'
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 26214400

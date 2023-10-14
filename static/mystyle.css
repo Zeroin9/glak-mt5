@@ -89,6 +89,7 @@ body {
     padding: 10px;
     background-color: #D8E6FC;
     border-radius: 5px;
+    cursor: pointer;
 }
 
 .object-card h3 {
@@ -108,6 +109,10 @@ body {
     flex: 1;
     background-color: #D8E6FC;
     width: 70%;
+}
+
+.highlight {
+  background-color: #B0CDF9;
 }
 
 .business-attendance-view__plot-container {
@@ -137,7 +142,6 @@ body {
     flex-grow: 1;
     position: relative;
     align-self: flex-end;
-    cursor: pointer;
     transition: background-color .1s ease-out,height .1s ease-out;
 }
 
